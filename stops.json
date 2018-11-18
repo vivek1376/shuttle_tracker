@@ -1,0 +1,1292 @@
+[
+  {
+    "id": 57,
+    "name": "Clifton Ave. & Calhoun St",
+    "code": null,
+    "description": "",
+    "lat": 39.1287,
+    "lon": -84.520638,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 132,
+    "name": "Kenwood Stop near The Chessecake Factory",
+    "code": null,
+    "description": "",
+    "lat": 39.201526,
+    "lon": -84.376794,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 47,
+    "name": "Euclid & Corry",
+    "code": null,
+    "description": "",
+    "lat": 39.129011,
+    "lon": -84.507868,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 33,
+    "name": "Ravine St & Ada Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.126438,
+    "lon": -84.525726,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 135,
+    "name": "Rookwood Pavillion near Starbucks Inbound",
+    "code": null,
+    "description": "",
+    "lat": 39.147715,
+    "lon": -84.443412,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 129,
+    "name": "Campus Green Garage",
+    "code": null,
+    "description": "",
+    "lat": 39.134329,
+    "lon": -84.514545,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 14,
+    "name": "Eden Ave & Goodman Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.13702,
+    "lon": -84.506157,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 37,
+    "name": "Warner St & Ohio Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.124599,
+    "lon": -84.516426,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 60,
+    "name": "St. Gregory & Pavilion (Mt. Adams-in front of the Teak Restaurant)",
+    "code": null,
+    "description": "",
+    "lat": 39.107578,
+    "lon": -84.49781,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 13,
+    "name": "CCM Plaza (Dieterle)",
+    "code": null,
+    "description": "",
+    "lat": 39.13002,
+    "lon": -84.516685,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 4,
+    "name": "Campus Recreation Center",
+    "code": null,
+    "description": "",
+    "lat": 39.132988,
+    "lon": -84.515015,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 3,
+    "name": "Kingsgate Conference Center Eastbound",
+    "code": null,
+    "description": "",
+    "lat": 39.137115,
+    "lon": -84.507561,
+    "buddy": 6,
+    "fields": {}
+  },
+  {
+    "id": 63,
+    "name": "6th & Vine St",
+    "code": null,
+    "description": "",
+    "lat": 39.102352,
+    "lon": -84.513161,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 125,
+    "name": "Street Car Brewery District",
+    "code": null,
+    "description": "",
+    "lat": 39.114445,
+    "lon": -84.519657,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 6,
+    "name": "Kingsgate Conference Center Westbound",
+    "code": null,
+    "description": "",
+    "lat": 39.137249,
+    "lon": -84.507423,
+    "buddy": 3,
+    "fields": {}
+  },
+  {
+    "id": 124,
+    "name": "Burnett/MLK East",
+    "code": null,
+    "description": "",
+    "lat": 39.135104,
+    "lon": -84.500774,
+    "buddy": 123,
+    "fields": {}
+  },
+  {
+    "id": 59,
+    "name": "Highland Ave. & McMillan St.",
+    "code": null,
+    "description": "",
+    "lat": 39.126724,
+    "lon": -84.503624,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 8,
+    "name": "Highland and Stetson St",
+    "code": null,
+    "description": "",
+    "lat": 39.134247,
+    "lon": -84.502724,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 1,
+    "name": "Eden Ave Garage - Rear",
+    "code": null,
+    "description": "",
+    "lat": 39.13858,
+    "lon": -84.506569,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 45,
+    "name": "UCBAC Main",
+    "code": null,
+    "description": "",
+    "lat": 39.233883,
+    "lon": -84.398926,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 123,
+    "name": "Burnet/MLK West",
+    "code": null,
+    "description": "",
+    "lat": 39.135287,
+    "lon": -84.500656,
+    "buddy": 124,
+    "fields": {}
+  },
+  {
+    "id": 53,
+    "name": "Forum rear entrance",
+    "code": null,
+    "description": "",
+    "lat": 39.137283,
+    "lon": -84.530205,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 40,
+    "name": "University Ave & Euclid Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.132774,
+    "lon": -84.507568,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 122,
+    "name": "BW3",
+    "code": null,
+    "description": "Kroger BW3",
+    "lat": 39.128371,
+    "lon": -84.515612,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 91,
+    "name": "Jefferson near Kroger",
+    "code": null,
+    "description": "",
+    "lat": 39.128047,
+    "lon": -84.511013,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 27,
+    "name": "Euclid Ave & Corry St    ",
+    "code": null,
+    "description": "",
+    "lat": 39.128885,
+    "lon": -84.50789,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 25,
+    "name": "195 E. McMillan (Campus Park Apts.)",
+    "code": null,
+    "description": "",
+    "lat": 39.126831,
+    "lon": -84.504478,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 12,
+    "name": "Edwards Center East",
+    "code": null,
+    "description": "",
+    "lat": 39.129253,
+    "lon": -84.51297,
+    "buddy": 11,
+    "fields": {}
+  },
+  {
+    "id": 111,
+    "name": "Bishop St.",
+    "code": null,
+    "description": "",
+    "lat": 39.135685,
+    "lon": -84.513962,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 17,
+    "name": "Brookline Dr & Jefferson Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.142117,
+    "lon": -84.515503,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 65,
+    "name": "Clifton Ave. (in front of McMicken Hall)",
+    "code": null,
+    "description": "",
+    "lat": 39.132019,
+    "lon": -84.520294,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 46,
+    "name": "Daniels & Euclid",
+    "code": null,
+    "description": "",
+    "lat": 39.131748,
+    "lon": -84.507759,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 22,
+    "name": "Deckebach Ave & Riddle Rd",
+    "code": null,
+    "description": "",
+    "lat": 39.13615,
+    "lon": -84.529091,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 55,
+    "name": "Dixmyth & MLK",
+    "code": null,
+    "description": "",
+    "lat": 39.139416,
+    "lon": -84.524536,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 121,
+    "name": "E Charlton and Short Vine",
+    "code": null,
+    "description": "",
+    "lat": 39.130393,
+    "lon": -84.50954,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 62,
+    "name": "Freedom Way &  Rosa Parks St.",
+    "code": null,
+    "description": "",
+    "lat": 39.097275,
+    "lon": -84.511848,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 15,
+    "name": "Glendora Ave & Jefferson Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.137951,
+    "lon": -84.511276,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 24,
+    "name": "Highland Ave & University Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.132126,
+    "lon": -84.50293,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 23,
+    "name": "Jefferson Ave & Daniels St",
+    "code": null,
+    "description": "",
+    "lat": 39.131657,
+    "lon": -84.51104,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 44,
+    "name": "UCBAC",
+    "code": null,
+    "description": "UCBAC Turnaround",
+    "lat": 39.233913,
+    "lon": -84.398628,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 130,
+    "name": "Kroger Stop",
+    "code": null,
+    "description": "",
+    "lat": 39.129276,
+    "lon": -84.511154,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 28,
+    "name": "Main Gate, Clifton Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.129753,
+    "lon": -84.520729,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 54,
+    "name": "McMicken & MLK",
+    "code": null,
+    "description": "",
+    "lat": 39.140079,
+    "lon": -84.531853,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 58,
+    "name": "M.L. King Dr. & Campus Green Dr.",
+    "code": null,
+    "description": "",
+    "lat": 39.135555,
+    "lon": -84.513138,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 61,
+    "name": "Newport on the Levee",
+    "code": null,
+    "description": "",
+    "lat": 39.094528,
+    "lon": -84.49543,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 56,
+    "name": "Ohio Ave & Calhoun St",
+    "code": null,
+    "description": "",
+    "lat": 39.128288,
+    "lon": -84.514824,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 38,
+    "name": "Ohio Ave & Lyon St",
+    "code": null,
+    "description": "",
+    "lat": 39.126598,
+    "lon": -84.515144,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 64,
+    "name": "Over the Rhine",
+    "code": null,
+    "description": "",
+    "lat": 39.10841,
+    "lon": -84.514717,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 7,
+    "name": "Piedmont Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.136024,
+    "lon": -84.503937,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 30,
+    "name": "Stratford Ave & Joselin Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.132999,
+    "lon": -84.521782,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 43,
+    "name": "UC Physicians",
+    "code": null,
+    "description": "",
+    "lat": 39.129826,
+    "lon": -84.480652,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 41,
+    "name": "UC Victory Parkway Campus",
+    "code": null,
+    "description": "",
+    "lat": 39.122487,
+    "lon": -84.483826,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 29,
+    "name": "University Pavilion",
+    "code": null,
+    "description": "",
+    "lat": 39.131149,
+    "lon": -84.519539,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 133,
+    "name": "Kenwood Stop near Macy",
+    "code": null,
+    "description": "",
+    "lat": 39.204668,
+    "lon": -84.376853,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 136,
+    "name": "Whitfield & Dixmyth East Bound",
+    "code": null,
+    "description": "",
+    "lat": 39.14001,
+    "lon": -84.523893,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 16,
+    "name": "Bishop St & Jefferson Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.140869,
+    "lon": -84.513405,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 92,
+    "name": "Jefferson & W. Daniels",
+    "code": null,
+    "description": "",
+    "lat": 39.131542,
+    "lon": -84.510956,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 116,
+    "name": "Clifton and MLK Outbound",
+    "code": null,
+    "description": "Clifton MLK Outbound",
+    "lat": 39.134991,
+    "lon": -84.520075,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 118,
+    "name": "Clifton and MLK Inbound",
+    "code": null,
+    "description": "",
+    "lat": 39.135794,
+    "lon": -84.520075,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 32,
+    "name": "University Ct & Straight St",
+    "code": null,
+    "description": "",
+    "lat": 39.129742,
+    "lon": -84.523781,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 103,
+    "name": "Riddle & Deckenbach",
+    "code": null,
+    "description": "",
+    "lat": 39.136139,
+    "lon": -84.529373,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 76,
+    "name": "Vine St & Corry",
+    "code": null,
+    "description": "",
+    "lat": 39.129246,
+    "lon": -84.50943,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 35,
+    "name": "Warner St & Wheeler St",
+    "code": null,
+    "description": "",
+    "lat": 39.124783,
+    "lon": -84.520866,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 104,
+    "name": "Probasco & Marshall",
+    "code": null,
+    "description": "",
+    "lat": 39.134537,
+    "lon": -84.52652,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 88,
+    "name": "Newport on the Levee 3rd and Saratoga",
+    "code": null,
+    "description": "",
+    "lat": 39.095032,
+    "lon": -84.494843,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 97,
+    "name": "Clifton & Ludlow",
+    "code": null,
+    "description": "",
+    "lat": 39.143497,
+    "lon": -84.519279,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 131,
+    "name": "E.University Ave & Bellevue Ave.",
+    "code": null,
+    "description": "",
+    "lat": 39.132627,
+    "lon": -84.504106,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 96,
+    "name": "Ruther & Jefferson",
+    "code": null,
+    "description": "",
+    "lat": 39.139915,
+    "lon": -84.512665,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 21,
+    "name": "Riddle & Marshall",
+    "code": null,
+    "description": "",
+    "lat": 39.135807,
+    "lon": -84.526428,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 80,
+    "name": "West Nixon & Glendora",
+    "code": null,
+    "description": "",
+    "lat": 39.137939,
+    "lon": -84.51123,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 34,
+    "name": "Warner St & Stratford Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.124966,
+    "lon": -84.523201,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 69,
+    "name": "McMillan St & Wheeler",
+    "code": null,
+    "description": "",
+    "lat": 39.127823,
+    "lon": -84.520523,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 95,
+    "name": "MLK & Reading WestBound",
+    "code": null,
+    "description": "",
+    "lat": 39.134972,
+    "lon": -84.497414,
+    "buddy": 93,
+    "fields": {}
+  },
+  {
+    "id": 11,
+    "name": "Edwards Center West",
+    "code": null,
+    "description": "",
+    "lat": 39.129402,
+    "lon": -84.512939,
+    "buddy": 12,
+    "fields": {}
+  },
+  {
+    "id": 89,
+    "name": "Moerlein and McMilllan",
+    "code": null,
+    "description": "",
+    "lat": 39.127396,
+    "lon": -84.516769,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 93,
+    "name": "MLK & Reading EastBound",
+    "code": null,
+    "description": "",
+    "lat": 39.134762,
+    "lon": -84.497299,
+    "buddy": 95,
+    "fields": {}
+  },
+  {
+    "id": 66,
+    "name": "Straight & Vestry",
+    "code": null,
+    "description": "",
+    "lat": 39.12973,
+    "lon": -84.524628,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 112,
+    "name": "Clifton/Howell",
+    "code": null,
+    "description": "",
+    "lat": 39.14299,
+    "lon": -84.519325,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 75,
+    "name": "Wm. Howard Taft & Eden",
+    "code": null,
+    "description": "",
+    "lat": 39.128113,
+    "lon": -84.505997,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 79,
+    "name": "Vne St. at University Hall",
+    "code": null,
+    "description": "",
+    "lat": 39.136883,
+    "lon": -84.509171,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 78,
+    "name": "Short Vine & Rochelle",
+    "code": null,
+    "description": "",
+    "lat": 39.134205,
+    "lon": -84.508995,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 106,
+    "name": "Ludlow & Telford",
+    "code": null,
+    "description": "",
+    "lat": 39.143711,
+    "lon": -84.520523,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 98,
+    "name": "Whitfield & Ludlow",
+    "code": null,
+    "description": "",
+    "lat": 39.144073,
+    "lon": -84.523903,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 94,
+    "name": "Stop 14",
+    "code": null,
+    "description": "",
+    "lat": 39.135557,
+    "lon": -84.51985,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 36,
+    "name": "Warner St & Moerlein Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.124699,
+    "lon": -84.518272,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 100,
+    "name": "Whitfield & Dixmyth",
+    "code": null,
+    "description": "",
+    "lat": 39.139969,
+    "lon": -84.523933,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 83,
+    "name": "Jefferson & Brookline",
+    "code": null,
+    "description": "",
+    "lat": 39.142307,
+    "lon": -84.515739,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 84,
+    "name": "Clifton & Howell",
+    "code": null,
+    "description": "",
+    "lat": 39.142586,
+    "lon": -84.519348,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 86,
+    "name": "Clifton (in front of Stratford Heights Bldg #1)",
+    "code": null,
+    "description": "",
+    "lat": 39.130741,
+    "lon": -84.520546,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 101,
+    "name": "Dixmyth & Clifton Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.141079,
+    "lon": -84.519485,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 109,
+    "name": "Eden Ave.",
+    "code": null,
+    "description": "",
+    "lat": 39.134422,
+    "lon": -84.505669,
+    "buddy": 110,
+    "fields": {}
+  },
+  {
+    "id": 114,
+    "name": "Highland and Oak",
+    "code": null,
+    "description": "",
+    "lat": 39.130926,
+    "lon": -84.502931,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 81,
+    "name": "Jefferson & Ruther",
+    "code": null,
+    "description": "",
+    "lat": 39.139874,
+    "lon": -84.512627,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 115,
+    "name": "Kroger on Kenard ",
+    "code": null,
+    "description": "",
+    "lat": 39.164382,
+    "lon": -84.514073,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 120,
+    "name": "Lowell and Whitfield",
+    "code": null,
+    "description": "",
+    "lat": 39.141187,
+    "lon": -84.524104,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 73,
+    "name": "McMillan & Auburn Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.127064,
+    "lon": -84.50853,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 71,
+    "name": "McMillan & Ohio",
+    "code": null,
+    "description": "",
+    "lat": 39.127445,
+    "lon": -84.514938,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 68,
+    "name": "McMillan St & Chickasaw",
+    "code": null,
+    "description": "",
+    "lat": 39.127922,
+    "lon": -84.522163,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 74,
+    "name": "McMillan St. & Maplewood",
+    "code": null,
+    "description": "",
+    "lat": 39.126762,
+    "lon": -84.504807,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 70,
+    "name": "McMillan St & Moerlein",
+    "code": null,
+    "description": "",
+    "lat": 39.127628,
+    "lon": -84.517326,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 67,
+    "name": "McMillan St & Victor",
+    "code": null,
+    "description": "",
+    "lat": 39.128059,
+    "lon": -84.523682,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 108,
+    "name": "Scioto",
+    "code": null,
+    "description": "",
+    "lat": 39.134674,
+    "lon": -84.511803,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 107,
+    "name": "Scioto",
+    "code": null,
+    "description": "",
+    "lat": 39.135448,
+    "lon": -84.511932,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 72,
+    "name": "McMillan & Vine",
+    "code": null,
+    "description": "",
+    "lat": 39.12727,
+    "lon": -84.511971,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 90,
+    "name": "Moerlein and Detzel",
+    "code": null,
+    "description": "",
+    "lat": 39.125866,
+    "lon": -84.517418,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 113,
+    "name": "Scioto/W. University Ave",
+    "code": null,
+    "description": "",
+    "lat": 39.133135,
+    "lon": -84.512463,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 39,
+    "name": "Ohio Ave & Calhoun St",
+    "code": null,
+    "description": "",
+    "lat": 39.128063,
+    "lon": -84.514671,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 102,
+    "name": "Riddle Rd.",
+    "code": null,
+    "description": "",
+    "lat": 39.136082,
+    "lon": -84.529411,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 77,
+    "name": "Short Vine & Dainels",
+    "code": null,
+    "description": "",
+    "lat": 39.131531,
+    "lon": -84.509308,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 19,
+    "name": "Riddle Rd. near ML King",
+    "code": null,
+    "description": "",
+    "lat": 39.135487,
+    "lon": -84.521317,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 20,
+    "name": "Riddle Rd near Riddle View Ln",
+    "code": null,
+    "description": "",
+    "lat": 39.135769,
+    "lon": -84.524216,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 110,
+    "name": "Stetson",
+    "code": null,
+    "description": "",
+    "lat": 39.134445,
+    "lon": -84.505692,
+    "buddy": 109,
+    "fields": {}
+  },
+  {
+    "id": 31,
+    "name": "Stratford Heights",
+    "code": null,
+    "description": "",
+    "lat": 39.131401,
+    "lon": -84.522217,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 137,
+    "name": "Whitfield & Lowell East Bound",
+    "code": null,
+    "description": "",
+    "lat": 39.141056,
+    "lon": -84.524017,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 127,
+    "name": "1819 Bldg. West Bound",
+    "code": null,
+    "description": "",
+    "lat": 39.13284,
+    "lon": -84.496096,
+    "buddy": 126,
+    "fields": {}
+  },
+  {
+    "id": 126,
+    "name": "1819 Bldg.  East Bound",
+    "code": null,
+    "description": "",
+    "lat": 39.132802,
+    "lon": -84.496102,
+    "buddy": 127,
+    "fields": {}
+  },
+  {
+    "id": 105,
+    "name": "Calhoun at Corbett Drive",
+    "code": null,
+    "description": "",
+    "lat": 39.128605,
+    "lon": -84.519577,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 134,
+    "name": "Rookwood Pavillion near Starbucks Outbound",
+    "code": null,
+    "description": "",
+    "lat": 39.147696,
+    "lon": -84.44341,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 138,
+    "name": "Whitfield & Terrace East Bound",
+    "code": null,
+    "description": "",
+    "lat": 39.14202,
+    "lon": -84.523904,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 2,
+    "name": "Eden Ave Garage - Front",
+    "code": null,
+    "description": "",
+    "lat": 39.13864,
+    "lon": -84.505366,
+    "buddy": 48,
+    "fields": {}
+  },
+  {
+    "id": 139,
+    "name": "Whitfield & Ludlow East Bound",
+    "code": null,
+    "description": "",
+    "lat": 39.144066,
+    "lon": -84.523768,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 140,
+    "name": "Ludlow & Telford East Bound",
+    "code": null,
+    "description": "",
+    "lat": 39.143625,
+    "lon": -84.52076,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 99,
+    "name": "Whitfield & Terrace",
+    "code": null,
+    "description": "",
+    "lat": 39.142136,
+    "lon": -84.524017,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 117,
+    "name": "Clifton and Ludlow Outbound",
+    "code": null,
+    "description": "",
+    "lat": 39.14315,
+    "lon": -84.519163,
+    "buddy": 119,
+    "fields": {}
+  },
+  {
+    "id": 119,
+    "name": "Clifton and Ludlow Inbound",
+    "code": null,
+    "description": "",
+    "lat": 39.14325,
+    "lon": -84.519271,
+    "buddy": 117,
+    "fields": {}
+  },
+  {
+    "id": 128,
+    "name": "IKEA",
+    "code": null,
+    "description": "Ikea West Chester",
+    "lat": 39.316469,
+    "lon": -84.433236,
+    "buddy": null,
+    "fields": {}
+  },
+  {
+    "id": 9,
+    "name": "University Gate Inbound",
+    "code": null,
+    "description": "",
+    "lat": 39.13308,
+    "lon": -84.512085,
+    "buddy": 10,
+    "fields": {}
+  },
+  {
+    "id": 10,
+    "name": "University Gate Outbound",
+    "code": null,
+    "description": "",
+    "lat": 39.133081,
+    "lon": -84.512072,
+    "buddy": 9,
+    "fields": {}
+  },
+  {
+    "id": 5,
+    "name": "Campus Green Drive",
+    "code": null,
+    "description": "",
+    "lat": 39.134331,
+    "lon": -84.513485,
+    "buddy": null,
+    "fields": {}
+  }
+]
