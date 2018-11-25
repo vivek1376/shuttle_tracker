@@ -1,6 +1,9 @@
 function initMap() {
     var map;
     var routes = [];
+    var stops = [];
+    var routeIds = [];
+    var stopIds = [];
     var currentRoute = undefined;
 
     var loc = {lat: 39.1031, lng: -84.5120};
@@ -96,6 +99,7 @@ function initMap() {
 //        var r;
 
     var routeLine = [];
+    //$.getJSON("https://uc.doublemap.com/map/v2/routes", function (data) {
     $.getJSON("routes_data.json", function (data) {
 
         var points, r;//, routeLine;
@@ -106,9 +110,11 @@ function initMap() {
             points = [];
             r = data[i];
             routes[r.id] = r;
+            routeIds.push(r.id);
 
             $('select#route').append('<option value="R'
-            + r.id + '">' + r.name + '</option>');
+                + r.id + '">' + r.name + '</option>');
+
             for (var p = 0, pl = r.path.length; p < pl; p += 2)
                 points.push({
                     lat: r.path[p],
@@ -132,86 +138,121 @@ function initMap() {
         }
 
         //for (i=0; i < 0; i++)
-          //  pathLayerGroup.remove(routeLine[i]);  //to remove
-
+        //  pathLayerGroup.remove(routeLine[i]);  //to remove
 
 
         //console.log("r.id : " + r.id);
 
+        //currentRoute = routeIds[0];
+        //addRouteAndStops(currentRoute);
 
-        //
-        // r.polyline = new google.maps.Data.Feature({
-        //     id: r.id,
-        //     geometry: new google.maps.Data.LineString(points),
-        //     properties: {
-        //         routeId: r.id,
-        //         strokeColor: "#" + r.color,
-        //         strokeOpacity: 0.6,
-        //         strokeWeight: 10
-        //     }
-        // });
-        // //
-        // pathLayerGroup.add(r.polyline);
-        //
-        // var polylineBounds = new google.maps.LatLngBounds();
-        // r.polyline.getGeometry().forEachLatLng(function(ll) {
-        //     polylineBounds.extend(ll);
-        // });
+        //console.log(routes);
 
-        currentRoute = data[0].id;
-        pathLayerGroup.add(routes[currentRoute].polyline);
+        fetchStops();
 
     });
 
-    $.getJSON("stops.json", function (dat) {
-        console.log(dat);
-        var s;
-        var i = dat.length;
 
-        while (i--) {
-            s = dat[i];
-            //console.log([s.lat, s.lon]);
-            //
-            // var opt = new google.maps.Data.add({
-            //     geometry: {lat: s.lat, lng: s.lon},
-            //     properties: {
-            //         //routeId: i,
-            //         //title: s.name,
-            //         //icon: google.maps.SymbolPath.CIRCLE,
-            //         style: {
-            //             icon: {
-            //                 path: google.maps.SymbolPath.CIRCLE,
-            //                 scale: 4
-            //             }
-            //         }
-            //         // strokeColor: "#cccccc",
-            //         // strokeOpacity: 0.6,
-            //         // strokeWeight: 10
-            //     }
-            // });
-            //
-            // map.data.add(opt);
+    // fetch all stops' info
+    var fetchStops = function () {
+        $.getJSON("stops.json", function (dat) {
+            var s;
+            var i = dat.length;
 
-            var opt = new google.maps.Data.Feature({
-                geometry: {lat: s.lat, lng: s.lon},
-                properties: {
-                    icon: {
-                        url: "stop_icon.png",
-                        scaledSize: new google.maps.Size(12, 12),
-                        anchor: new google.maps.Point(6, 6)
+            while (i--) {
+                s = dat[i];
+                stops[s.id] = s;
+                stopIds.push(s.id);
+
+                // var opt = new google.maps.Data.Feature({
+                //     geometry: {lat: s.lat, lng: s.lon},
+                //     properties: {
+                //         icon: {
+                //             url: "stop_icon.png",
+                //             scaledSize: new google.maps.Size(12, 12),
+                //             anchor: new google.maps.Point(6, 6)
+                //         }
+                //     }
+                //     });
+                //
+                // stopIconLayerGroup.add(opt);
+            }
+
+            // wait until routes is fetched
+            // BUG???
+            while (!routes.length) {
+                console.log("bugg..");
+                ;
+            }
+
+
+
+
+            console.log(dat);
+
+            updateMapWithStops();
+
+            currentRoute = routeIds[0];
+            addRouteAndStops(currentRoute);
+
+            console.log(routes);
+        });
+    }
+
+
+    var updateMapWithStops = function() {
+        var i = routeIds.length;
+        var r, s, si;
+        var stop, mark;
+
+        while(i--) {
+            r = routes[routeIds[i]];
+            s = r.stops;
+            si = s.length;
+            r.stopIcons = [];
+
+            while (si--) {
+                stop = stops[s[si]];
+                if (stop === undefined)
+                    continue;
+
+                mark = new google.maps.Data.Feature({
+                    geometry: {
+                        lat: stop.lat,
+                        lng: stop.lon
+                    },
+                    properties: {
+                        routeId: r.id,
+                        title: stop.name,
+                        icon: {
+                            url: "stop_icon.png",
+                            scaledSize: new google.maps.Size(12,12),
+                            anchor: new google.maps.Point(6,6)
+                        }
                     }
-                }
                 });
 
-            stopIconLayerGroup.add(opt);
-            //map.data.add(opt);
+                r.stopIcons.push(mark);
+            }
         }
-    });
+    };
+
+    var removeRouteAndStops = function (route) {
+        removeStopsForRoute(route);
+        removeRoute(route);
+    };
+
+    var addRouteAndStops = function(route) {
+        addRoute(route);
+        addStopForRoute(route);
+        removeStopDropDownList();
+        addStopsDropDownList(route);
+    };
 
     $('select#route').change(function () {
-        removeRoute(currentRoute);
+        removeRouteAndStops(currentRoute);
         currentRoute = $(this).children('option:selected').val().substr(1);
-        addRoute(currentRoute);
+        addRouteAndStops(currentRoute);
     });
     // pathLayerGroup.setStyle({
     //     visible: true,
@@ -231,6 +272,41 @@ function initMap() {
         pathLayerGroup.remove(routes[parseInt(r_id)].polyline);
     };
 
+
+    var addStopForRoute = function (route) {
+        var s = routes[parseInt(route)].stopIcons;
+        var i = s.length;
+
+        while(i--) {
+            stopIconLayerGroup.add(s[i]);
+        }
+    };
+
+    var addStopsDropDownList = function (route) {
+        var s = routes[parseInt(route)].stopIcons;
+        var i = s.length;
+
+        while (i--) {
+            $('select#stop').append('<option value="S'
+                + s[i].getProperty("routeId") + '">'
+                + s[i].getProperty("title") + '</option>');
+        }
+    };
+
+    var removeStopDropDownList = function () {
+        $('select#stop').empty();
+    };
+
+    var removeStopsForRoute = function (route) {
+        var s = routes[parseInt(route)].stopIcons;
+        var i = s.length;
+
+        while(i--) {
+            stopIconLayerGroup.remove(s[i]);
+        }
+    };
+
+
     var marker = new google.maps.Marker({
         position: map.getCenter(),
         icon: {
@@ -248,14 +324,6 @@ function initMap() {
     //         scale: 4
     //     }
     // });
-
-    // var removeRoute = function(routeId) {
-    //     var r = routes[routeId];
-    //     showRoute(routeId, false);
-    //     routeIds.splice(routeIds.indexOf(routeId), 1);
-    //     delete routes[routeId];
-    //     DM.removeRoute(r);
-    // };
 
     var highlightRoute = function(routeId, state) {
         //return;
@@ -282,6 +350,16 @@ function initMap() {
         }
     };
 
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    }
+
+
     // listeners
     pathLayerGroup.addListener('mouseover', function(event) {
         //console.log(event);
@@ -292,13 +370,7 @@ function initMap() {
         return highlightRoute(event.feature.getProperty('routeId'), false);
     });
 
-    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-            'Error: The Geolocation service failed.' :
-            'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
-    }
+
 }
 
 
