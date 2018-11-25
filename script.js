@@ -8,21 +8,6 @@ function initMap() {
 
     var loc = {lat: 39.1031, lng: -84.5120};
 
-    // var coord_path = [
-    //     {lat: 39.1, lng: -84.5},
-    //     {lat: 39.3, lng: -84.4},
-    //     {lat: 39.0, lng: -84.7},
-    //     {lat: 39.5, lng: -84.0}
-    // ];
-    //
-    // var Path = new google.maps.Polyline({
-    //     path: coord_path,
-    //     geodesic: true,
-    //     strokeColor: '#FF0000',
-    //     strokeOpacity: 1.0,
-    //     strokeWeight: 2
-    // });
-
     // create map
     map = new google.maps.Map(document.getElementById('map'), {
         center: loc,
@@ -87,17 +72,6 @@ function initMap() {
         handleLocationError(false, infoWindow, map.getCenter());
     }
 
-    // var pathLayerGroup = new google.maps.Data({
-    //     map: map,
-    //     style: {
-    //         strokeColor: '#753E24',
-    //         strokeOpacity: 0.9,
-    //         strokeWeight: 4
-    //     }
-    // });
-
-//        var r;
-
     var routeLine = [];
     //$.getJSON("https://uc.doublemap.com/map/v2/routes", function (data) {
     $.getJSON("routes_data.json", function (data) {
@@ -137,17 +111,6 @@ function initMap() {
             //pathLayerGroup.remove(routeLine);
         }
 
-        //for (i=0; i < 0; i++)
-        //  pathLayerGroup.remove(routeLine[i]);  //to remove
-
-
-        //console.log("r.id : " + r.id);
-
-        //currentRoute = routeIds[0];
-        //addRouteAndStops(currentRoute);
-
-        //console.log(routes);
-
         fetchStops();
 
     });
@@ -163,39 +126,15 @@ function initMap() {
                 s = dat[i];
                 stops[s.id] = s;
                 stopIds.push(s.id);
-
-                // var opt = new google.maps.Data.Feature({
-                //     geometry: {lat: s.lat, lng: s.lon},
-                //     properties: {
-                //         icon: {
-                //             url: "stop_icon.png",
-                //             scaledSize: new google.maps.Size(12, 12),
-                //             anchor: new google.maps.Point(6, 6)
-                //         }
-                //     }
-                //     });
-                //
-                // stopIconLayerGroup.add(opt);
             }
-
-            // wait until routes is fetched
-            // BUG???
-            while (!routes.length) {
-                console.log("bugg..");
-                ;
-            }
-
-
-
-
-            console.log(dat);
+//            console.log(dat);
 
             updateMapWithStops();
 
             currentRoute = routeIds[0];
             addRouteAndStops(currentRoute);
 
-            console.log(routes);
+  //          console.log(routes);
         });
     }
 
@@ -254,13 +193,6 @@ function initMap() {
         currentRoute = $(this).children('option:selected').val().substr(1);
         addRouteAndStops(currentRoute);
     });
-    // pathLayerGroup.setStyle({
-    //     visible: true,
-    //     icon: {
-    //         path: google.maps.SymbolPath.CIRCLE,
-    //         scale: 4
-    //     }
-    // });
 
     var addRoute = function(r_id) {
 
@@ -317,13 +249,6 @@ function initMap() {
         map: map
     });
 
-    // map.data.setStyle({
-    //     visible: true,
-    //     icon: {
-    //         path: google.maps.SymbolPath.CIRCLE,
-    //         scale: 4
-    //     }
-    // });
 
     var highlightRoute = function(routeId, state) {
         //return;
@@ -337,16 +262,8 @@ function initMap() {
                 strokeWeight: 6,
                 zIndex: 100
             });
-            // if (r.stopIcons !== undefined)
-            //     for (var i = 0; i < r.stopIcons.length; i++)
-            //         stopIconLayerGroup.overrideStyle(r.stopIcons[i], {
-            //             zIndex: 1
-            //         });
         } else {
             pathLayerGroup.revertStyle(p);
-            // if (r.stopIcons !== undefined)
-            //     for (var i = 0; i < r.stopIcons.length; i++)
-            //         stopIconLayerGroup.revertStyle(r.stopIcons[i]);
         }
     };
 
