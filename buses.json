@@ -1,0 +1,35 @@
+[
+  {
+    "id": 3049,
+    "name": "2001",
+    "lat": 39.09442,
+    "lon": -84.51686,
+    "heading": 273,
+    "route": 30,
+    "lastStop": null,
+    "fields": {},
+    "lastUpdate": 1543168304
+  },
+  {
+    "id": 3001,
+    "name": "3001",
+    "lat": 39.13522,
+    "lon": -84.51298,
+    "heading": 5,
+    "route": 45,
+    "lastStop": 129,
+    "fields": {},
+    "lastUpdate": 1543168306
+  },
+  {
+    "id": 3048,
+    "name": "56",
+    "lat": 39.11048,
+    "lon": -84.52039,
+    "heading": 169,
+    "route": 30,
+    "lastStop": 23,
+    "fields": {},
+    "lastUpdate": 1543168306
+  }
+]

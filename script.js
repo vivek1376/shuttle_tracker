@@ -2,11 +2,16 @@ function initMap() {
     var map;
     var routes = [];
     var stops = [];
+    var buses = [];
+    var busIds = [];
     var routeIds = [];
     var stopIds = [];
+
+    var jumpThreshold = 300;
     var currentRoute = undefined;
 
     var loc = {lat: 39.1031, lng: -84.5120};
+    var loc2 = {lat: 39.1131, lng: -84.5320};
 
     // create map
     map = new google.maps.Map(document.getElementById('map'), {
@@ -47,24 +52,31 @@ function initMap() {
 
     var marker = new google.maps.Marker({position: loc, map: map});
 
-    // auto fetch location
+    //auto fetch location
     if (navigator.geolocation) {
+        console.log("navigator");
         navigator.geolocation.getCurrentPosition(function (position) {
+
             var pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
+            console.log("inside");
+            console.log(pos);
 
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
+            //infoWindow.setPosition(pos);
+            //infoWindow.setContent('Location found.');
+            //infoWindow.open(map);
+
+            //marker.setPosition(pos);
 
             marker.setPosition(pos);
 
             // infoWindow.setPosition(pos);
             // infoWindow.setContent('Location found.');
             //infoWindow.open(map);
-            map.setCenter(pos);
+
+            //map.setCenter(pos);
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
         });
@@ -113,6 +125,7 @@ function initMap() {
 
         fetchStops();
 
+        fetchBuses(false);
     });
 
 
@@ -134,9 +147,86 @@ function initMap() {
             currentRoute = routeIds[0];
             addRouteAndStops(currentRoute);
 
-  //          console.log(routes);
+            //    console.log(routes);
         });
-    }
+    };
+
+
+    var fetchBuses = function(autoNext) {
+
+
+        $.getJSON("buses.json", function(dat) {
+            console.log(dat);
+
+            // B; NEW
+            // e: OLD
+            var b, e;
+            for (var i = 0, len = dat.length; i < len; i++) {
+                b = dat[i];
+
+                e = buses[b.id];
+
+                // if buses[] has old position busId ?????
+                if (e) {
+                    // YESS
+
+                    // if route changed
+                    if (b.route != e.route) {
+                        e.icon.setMap(null);
+                        delete buses[b.id];
+                        rember(b.id, busIds);
+                    } else {
+                        // TODO ???????
+//                        if (b.lastUpdate - e.lastUpdate > 60)
+                        moveBus(e.id, b.lat, b.lon);
+
+                        e.lat = b.lat;
+                        e.lon = b.lon;
+                        e.lastStop = b.lastStop;
+                        e.lastUpdate = b.lastUpdate;
+                    }
+
+                    e.live = true;
+
+                    // ????
+                    // if (typeof routes[b.route] !== "undefined")
+                    //     if (routes[b.route].visible !== true)
+                    //         e.icon.setMap(null);
+
+
+                }
+
+                if (buses[b.id] === undefined && typeof routes[b.route] !== "undefined") {
+                    b.ilat = b.lat;
+                    b.ilon = b.lon;
+                    b.live = true;
+
+                    buses[b.id] = b;
+                    busIds.push(b.id);
+
+                    b.icon = createBusIcon(b);
+                }
+            }
+
+            console.log(buses);
+
+            // iterate over all buses
+            for (var i = 0, len = busIds.length; i < len; i++) {
+                b = buses[busIds[i]];
+                if (!b)
+                    continue;
+                if (b.live !== true) {
+                    buses[b.id] = undefined;
+                    b.icon.setMap(null);
+                    rember(b.id, busIds);
+                    i--;
+                } else
+                    b.live = undefined;
+            }
+        });
+
+        setTimeout(fetchBuses, 3000);
+    };
 
 
     var updateMapWithStops = function() {
@@ -171,10 +261,142 @@ function initMap() {
                     }
                 });
 
+
+
                 r.stopIcons.push(mark);
             }
+            //console.log("mark:");
+            //console.log(mark);
         }
     };
+
+    var moveBus = function(busId, lat, lon) {
+        var b = buses[busId];
+        var route = routes[b.route];
+
+        // TODO ???
+        //if (!route || route.visible == false)
+        if (!route)
+            b.icon.setMap(null);
+
+        if (route === undefined) {
+            b.icon.setPosition({
+                lat: lat,
+                lng: lon
+            });
+            b.ilat = lat;
+            b.ilon = lon;
+        } else {
+            var newloc = nearest_point_polyline(lat, lon, route.path, 80);
+            b.icon.setPosition({
+                lat: newloc[0],
+                lng: newloc[1]
+            });
+            b.ilat = newloc[0];
+            b.ilon = newloc[1];
+        }
+    };
+
+    var createBusIcon = function(bus) {
+        var annotation;
+        var color;
+        // if ('busAnnotation'in DM && DM.busAnnotation == 'bus_id')
+        //     annotation = encodeURIComponent(bus.name);
+        // else if (routes[bus.route] === undefined)
+        //     annotation = "";
+        // else
+        //     annotation = encodeURIComponent(routes[bus.route].short_name);
+        // if (routes[bus.route] === undefined)
+        //     color = '333333';
+        // else
+        //     color = encodeURIComponent(routes[bus.route].color);
+
+        //var iconImage = '/map/img/colorize?img=bus_icon&color=' + color + '&annotate=' + annotation;
+        var icon = new google.maps.Marker({
+            position: {
+                lat: bus.lat,
+                lng: bus.lon
+            },
+            title: "Bus " + bus.name,
+            icon: {
+                url: "MTS_Bus_icon.svg",
+                //path: google.maps.SymbolPath.CIRCLE,
+                //scale: 7
+                scaledSize: new google.maps.Size(26,26),
+                anchor: new google.maps.Point(13,13)
+             },
+            clickable: false,
+            optimized: false
+        });
+
+        //if (routes[bus.route].visible)
+        icon.setMap(map);
+
+        return icon;
+    };
+
+    function haversine(lat1, lon1, lat2, lon2) {
+        var R = 6371000;
+        var dLat = toRad(lat2 - lat1);
+        var dLon = toRad(lon2 - lon1);
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c;
+        return d;
+    }
+
+    function nearest_point_polyline(px, py, polyline, limit) {
+        var nearest_point = [px, py];
+        var nearest_dist = limit;
+        if (polyline.length < 4)
+            return nearest_point;
+        for (var i = 0; i < polyline.length - 3; i += 2) {
+            var nearest = nearest_point_segment(px, py, polyline[i + 0], polyline[i + 1], polyline[i + 2], polyline[i + 3]);
+            var dist = haversine(px, py, nearest[0], nearest[1]);
+            if (dist < nearest_dist) {
+                nearest_point = nearest;
+                nearest_dist = dist;
+            }
+        }
+        return nearest_point;
+    }
+
+    function nearest_point_segment(px, py, vx, vy, wx, wy) {
+        if (vx == wx && vy == wy)
+            return [vx, vy];
+        var l2 = (vx - wx) * (vx - wx) + (vy - wy) * (vy - wy);
+        var t = ((px - vx) * (wx - vx) + (py - vy) * (wy - vy)) / l2;
+        if (t < 0)
+            return [vx, vy];
+        else if (t > 1.0)
+            return [wx, wy];
+        var projx = vx + t * (wx - vx);
+        var projy = vy + t * (wy - vy);
+        return [projx, projy];
+    }
+
+    function toRad(degree) {
+        return degree * Math.PI / 180;
+    }
+
+    function rember(val, arr) {
+        for (var i = 0, len = arr.length; i < len; i++)
+            if (arr[i] === val) {
+                arr.splice(i, 1);
+                break;
+            }
+        return arr;
+    }
+
+    // TODO ??????
+    function rember(val, arr) {
+        for (var i = 0, len = arr.length; i < len; i++)
+            if (arr[i] === val) {
+                arr.splice(i, 1);
+                break;
+            }
+        return arr;
+    }
 
     var removeRouteAndStops = function (route) {
         removeStopsForRoute(route);
@@ -195,18 +417,19 @@ function initMap() {
     });
 
     var addRoute = function(r_id) {
+        //console.log(typeof r_id);
 
-        pathLayerGroup.add(routes[parseInt(r_id)].polyline);
+        pathLayerGroup.add(routes[r_id].polyline);
     };
 
     var removeRoute = function(r_id) {
 
-        pathLayerGroup.remove(routes[parseInt(r_id)].polyline);
+        pathLayerGroup.remove(routes[r_id].polyline);
     };
 
 
     var addStopForRoute = function (route) {
-        var s = routes[parseInt(route)].stopIcons;
+        var s = routes[route].stopIcons;
         var i = s.length;
 
         while(i--) {
@@ -215,7 +438,7 @@ function initMap() {
     };
 
     var addStopsDropDownList = function (route) {
-        var s = routes[parseInt(route)].stopIcons;
+        var s = routes[route].stopIcons;
         var i = s.length;
 
         while (i--) {
@@ -230,7 +453,7 @@ function initMap() {
     };
 
     var removeStopsForRoute = function (route) {
-        var s = routes[parseInt(route)].stopIcons;
+        var s = routes[route].stopIcons;
         var i = s.length;
 
         while(i--) {
@@ -239,11 +462,11 @@ function initMap() {
     };
 
 
-    var marker = new google.maps.Marker({
+    var marker2 = new google.maps.Marker({
         position: map.getCenter(),
         icon: {
             path: google.maps.SymbolPath.CIRCLE,
-            scale: 4
+            scale: 8
         },
         draggable: true,
         map: map
