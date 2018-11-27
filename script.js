@@ -2,10 +2,11 @@ function initMap() {
     var map;
     var routes = [];
     var stops = [];
-    var buses = [];
+    var buses = {};
     var busIds = [];
     var routeIds = [];
     var stopIds = [];
+    var visibleBuses = [];
 
     var jumpThreshold = 300;
     var currentRoute = undefined;
@@ -85,8 +86,8 @@ function initMap() {
     }
 
     var routeLine = [];
-    //$.getJSON("https://uc.doublemap.com/map/v2/routes", function (data) {
-    $.getJSON("routes_data.json", function (data) {
+    $.getJSON("https://uc.doublemap.com/map/v2/routes", function (data) {
+    //$.getJSON("routes_data.json", function (data) {
 
         var points, r;//, routeLine;
 
@@ -96,6 +97,7 @@ function initMap() {
             points = [];
             r = data[i];
             routes[r.id] = r;
+            routes[r.id].visible = false;
             routeIds.push(r.id);
 
             $('select#route').append('<option value="R'
@@ -121,7 +123,9 @@ function initMap() {
             //map.data.add(routeLine);
             //pathLayerGroup.add(r.polyline);
             //pathLayerGroup.remove(routeLine);
+
         }
+
 
         fetchStops();
 
@@ -131,13 +135,15 @@ function initMap() {
 
     // fetch all stops' info
     var fetchStops = function () {
-        $.getJSON("stops.json", function (dat) {
+        $.getJSON("https://uc.doublemap.com/map/v2/stops", function(dat) {
+        //$.getJSON("stops.json", function (dat) {
             var s;
             var i = dat.length;
 
             while (i--) {
                 s = dat[i];
                 stops[s.id] = s;
+                stops[s.id].visible = false;
                 stopIds.push(s.id);
             }
 //            console.log(dat);
@@ -145,7 +151,7 @@ function initMap() {
             updateMapWithStops();
 
             currentRoute = routeIds[0];
-            addRouteAndStops(currentRoute);
+            addRouteStopsBuses(currentRoute);
 
             //    console.log(routes);
         });
@@ -153,17 +159,18 @@ function initMap() {
 
 
     var fetchBuses = function(autoNext) {
-
-
-        $.getJSON("buses.json", function(dat) {
-            console.log(dat);
+        $.getJSON("https://uc.doublemap.com/map/v2/buses", function(dat) {
+        //$.getJSON("buses.json", function(dat) {
+//            console.log(dat);
 
             // B; NEW
             // e: OLD
             var b, e;
+            console.log("buses.length");
+            console.log(dat.length);
             for (var i = 0, len = dat.length; i < len; i++) {
                 b = dat[i];
-
+                //console.log(b);
                 e = buses[b.id];
 
                 // if buses[] has old position busId ?????
@@ -202,13 +209,18 @@ function initMap() {
                     b.live = true;
 
                     buses[b.id] = b;
+                    buses[b.id].visible = false;
                     busIds.push(b.id);
 
                     b.icon = createBusIcon(b);
+                    //buses[b.id].icon.setMap(map);
                 }
             }
 
+            console.log("buses:");
             console.log(buses);
+
+            //console.log(buses);
 
             // iterate over all buses
             for (var i = 0, len = busIds.length; i < len; i++) {
@@ -257,7 +269,8 @@ function initMap() {
                             url: "stop_icon.png",
                             scaledSize: new google.maps.Size(12,12),
                             anchor: new google.maps.Point(6,6)
-                        }
+                        },
+                        zIndex: 10
                     }
                 });
 
@@ -326,11 +339,12 @@ function initMap() {
                 anchor: new google.maps.Point(13,13)
              },
             clickable: false,
-            optimized: false
+            optimized: false,
+            zIndex: 100
         });
 
         //if (routes[bus.route].visible)
-        icon.setMap(map);
+        //icon.setMap(map);
 
         return icon;
     };
@@ -399,41 +413,87 @@ function initMap() {
     }
 
     var removeRouteAndStops = function (route) {
+        removeBusesForRoute(route);
         removeStopsForRoute(route);
         removeRoute(route);
     };
 
+    var addRouteStopsBuses = function (route) {
+        addRouteAndStops(route);
+        addBusesForRoute(route);
+    };
+
     var addRouteAndStops = function(route) {
         addRoute(route);
-        addStopForRoute(route);
-        removeStopDropDownList();
+        addStopsForRoute(route);
+
+        removeStopsDropDownList();
         addStopsDropDownList(route);
+    };
+
+    var removeBusesForRoute = function (route) {
+        var visibleBusesNew = [];
+
+        $.each(visibleBuses, function (i, bus_id) {
+            if (route == buses[bus_id].route) {
+                buses[bus_id].icon.setMap(null);
+                buses[bus_id].visible = false;
+            } else
+                visibleBusesNew.push(bus_id);
+        });
+
+        visibleBuses.length = 0;
+        visibleBuses = visibleBusesNew;
+    };
+
+    var removeAllBuses = function () {
+        $.each(visibleBuses, function (i, bus_id) {
+            buses[bus_id].icon.setMap(null);
+        });
+
+        visibleBuses.length = 0;
+    };
+
+    var addBusesForRoute = function(route) {
+        console.log("currentRoute: "  + currentRoute);
+        $.each(buses, function (i, bus) {
+            //console.log(bus);
+
+            if (bus.route == currentRoute) {
+                visibleBuses.push(i);
+                bus.icon.setMap(map);
+                bus.visible = true;
+            }
+        })
     };
 
     $('select#route').change(function () {
         removeRouteAndStops(currentRoute);
         currentRoute = $(this).children('option:selected').val().substr(1);
-        addRouteAndStops(currentRoute);
+        addRouteStopsBuses(currentRoute);
     });
 
     var addRoute = function(r_id) {
         //console.log(typeof r_id);
 
         pathLayerGroup.add(routes[r_id].polyline);
+        routes[r_id].visible = true;
     };
 
     var removeRoute = function(r_id) {
 
         pathLayerGroup.remove(routes[r_id].polyline);
+        routes[r_id].visible = false;
     };
 
 
-    var addStopForRoute = function (route) {
+    var addStopsForRoute = function (route) {
         var s = routes[route].stopIcons;
         var i = s.length;
 
         while(i--) {
             stopIconLayerGroup.add(s[i]);
+            s[i].visible = true;
         }
     };
 
@@ -448,7 +508,7 @@ function initMap() {
         }
     };
 
-    var removeStopDropDownList = function () {
+    var removeStopsDropDownList = function () {
         $('select#stop').empty();
     };
 
@@ -458,9 +518,9 @@ function initMap() {
 
         while(i--) {
             stopIconLayerGroup.remove(s[i]);
+            s[i].visible = false;
         }
     };
-
 
     var marker2 = new google.maps.Marker({
         position: map.getCenter(),
@@ -513,4 +573,24 @@ function initMap() {
 
 }
 
+$(function(){
+    console.log("announcement...");
+    // jQuery methods go here...
+    $.getJSON('https://uc.doublemap.com/map/v2/announcements', function(dat) {
+        $.each(dat, function (index, val) {
+            //console.log(val);
+            $('div#info').append('<p>' + val.message + '</p>');
+        });
+        //console.log(dat);
+        var obj, linkedMessage;
+        if (dat.length == 0) {
+            console.log("");
+        }
+
+        //annB.append($("<em>").text("No new announcements"));
+        else {
+            ;
+        }
+    });
+});
 

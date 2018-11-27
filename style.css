@@ -52,3 +52,9 @@ div#map {
     margin: 1em;
     margin-top: 0;
 }
+
+div#info p {
+    background-color: #c4efee;
+    margin: 0.5em;
+    padding: 0.3em;
+}
