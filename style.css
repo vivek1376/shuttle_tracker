@@ -19,38 +19,52 @@ select#stop {
 div#info {
     width: 100%;
     height:600px;
-    border: #603d3d;
-    border-style: solid;
-    border-width: 1px;
+    /*border: #603d3d;*/
+    /*border-style: solid;*/
+    /*border-width: 1px;*/
 }
 
 
 
 div#left-pane {
     width: 24%;
-    border: 2px solid #870000;
+    border: 1px solid #d5ced1;
     float: left;
     margin: 1em;
     padding: 1em;
     /*height: 100%;*/
+    background-color: #fdfdfb;
+    border-radius: 0.3em;
 }
 
 div#trackInfo {
     width: 56%;
     height: 250px;
-    border: 1px solid #3d0e10;
+    border: 1px solid #d5ced1;
+    border-bottom: 0;
     float: left;
     margin: 1em;
     margin-bottom: 0;
+    background-color: #fdfdfb;
+    border-radius: 0.3em;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 div#map {
     width: 56%;
     height: 600px;
-    border: 1px solid #3d0e10;
+    border: 0; /*1px solid #3d0e10;*/
     float: left;
     margin: 1em;
     margin-top: 0;
+    border: 1px solid #d5ced1;
+    border-top: 0;
+    border-radius: 0.3em;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    /*mix-blend-mode: multiply;*/
+
 }
 
 div#info p {
@@ -58,3 +72,98 @@ div#info p {
     margin: 0.5em;
     padding: 0.3em;
 }
+
+body {
+    background-color: whitesmoke;
+    background-image: url("kindajean.png");
+    font-family: 'IBM Plex Sans';
+}
+
+div#trackInfo{
+    padding: 1.2em;
+}
+
+select {
+   /*-webkit-appearance: none;*/
+   /*-moz-appearance: none;*/
+   /*appearance: none;       !* remove default arrow *!*/
+   /*background-image: url(...);   !* add custom arrow *!*/
+
+}
+
+div#selectBoxes {
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+}
+
+
+div#trackInfo p {
+    color: #5f5858;
+}
+p#arriveTime {
+    font-size: 2.1em;
+    text-align: left;
+
+}
+
+p#arriveTime span {
+    padding-left: 0.6em;
+    padding-right: 0.6em;
+    margin-left: 0.2em;
+    border-radius: 0.8em;
+    background-color: #a1fbde;
+    color: #032225;
+    font-style: italic;
+    font-weight: bold;
+}
+
+p#walkTime {
+    margin-top: 0.5em;
+    font-size: 1.8em;
+    text-align: left;
+}
+
+p#walkTime span {
+    background-color: #192543;
+    color: #e3dbde;
+    font-weight: bold;
+    font-style: italic;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    margin-left: 0.1em;
+    border-radius: 0.7em;
+    background-color: #a1fbde;
+    color: #032225;
+}
+
+p#routeName {
+    font-size: 1.2em;
+    text-align: right;
+}
+
+p#stopName {
+    margin-top: 2em;
+    font-size: 1.2em;
+    text-align: right;
+}
+
+p#stopName span {
+    font-size: 1.4em;
+    margin-left: 0.5em;
+    font-weight: bold;
+}
+
+p#routeName span {
+    font-size: 1.4em;
+    margin-left: 0.5em;
+    font-weight: bold;
+}
+
+/*div#trackInfo p.noEta span {*/
+    /*background-color: transparent;*/
+    /*color: #eb5176;*/
+    /*padding: 0;*/
+    /*margin-left: 0;*/
+    /*border-radius: 0.8em;*/
+    /*font-style: italic;*/
+    /*font-weight: normal;*/
+/*}*/

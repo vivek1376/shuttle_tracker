@@ -7,21 +7,44 @@ function initMap() {
     var routeIds = [];
     var stopIds = [];
     var visibleBuses = [];
+    var activeRouteStopIds_loc_eta_walkTime = [];
+
+    var pos = undefined;
+
+    var activeRoutes = new Set();
+
+    var refreshBuses = true;
 
     var jumpThreshold = 300;
     var currentRoute = undefined;
 
-    var loc = {lat: 39.1031, lng: -84.5120};
-    var loc2 = {lat: 39.1131, lng: -84.5320};
+    // var loc = {lat: 39.1031, lng: -84.5120};
+    var loc = {lat: 39.144356, lng: -84.523241};
+
+    var directionsService = new google.maps.DirectionsService();
+    var directionsDisplay = new google.maps.DirectionsRenderer({
+        preserveViewport: true,
+        suppressMarkers: true
+    });
+    var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+    // var mapOptions = {
+    // zoom:7,
+    //  center: chicago
+    // }
+
 
     // create map
     map = new google.maps.Map(document.getElementById('map'), {
         center: loc,
         zoom: 14,
-        mapTypeId: 'roadmap',
+        mapTypeId: 'roadmap'
         //disableDefaultUI: true,
         //gestureHandling: 'cooperative'
     });
+
+    directionsDisplay.setMap(map);
+
+    var distMatrixService = new google.maps.DistanceMatrixService();
 
 
     var pathLayerGroup = new google.maps.Data({
@@ -58,12 +81,26 @@ function initMap() {
         console.log("navigator");
         navigator.geolocation.getCurrentPosition(function (position) {
 
-            var pos = {
+            pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
             console.log("inside");
             console.log(pos);
+
+            // var request = {
+            //     origin: loc,
+            //     destination: pos,
+            //     travelMode: 'WALKING'
+            // };
+            //
+            // directionsService.route(request, function(result, status) {
+            //     if (status == 'OK') {
+            //         //console.log(result.routes[0].legs[0]);
+            //        directionsDisplay.setDirections(result);
+            //     }
+            // });
+
 
             //infoWindow.setPosition(pos);
             //infoWindow.setContent('Location found.');
@@ -84,6 +121,188 @@ function initMap() {
     } else {
         handleLocationError(false, infoWindow, map.getCenter());
     }
+    var plotRoute = function (pos1, pos2) {
+        var request = {
+            origin: pos1,
+            destination: pos2,
+            travelMode: 'WALKING'
+        };
+
+        directionsService.route(request, function(result, status) {
+            if (status == 'OK') {
+                //console.log(result.routes[0].legs[0]);
+                directionsDisplay.setDirections(result);
+            }
+        });
+    };
+
+    var populateActiveRoutesFromBuses = function () {
+        activeRoutes.clear();
+        $.each(buses, function (i, bus) {
+            activeRoutes.add(bus.route);
+            //console.log(bus.route);
+        });
+
+        //console.log(activeRoutes);
+    };
+
+    var getDistanceFromStop = function (stop) {
+        var pos2 = {
+            lat: stop.lat,
+            lng: stop.lon
+        };
+
+        var request = {
+            origin: pos,
+            destination: pos2,
+            travelMode: 'WALKING'
+        };
+
+        directionsService.route(request, function(result, status) {
+            if (status == 'OK') {
+                console.log(result.routes[0].legs[0]);
+                //directionsDisplay.setDirections(result);
+            }
+        });
+    };
+
+    var getActiveRoutesClosestStop = function (routes_set) {
+        activeRouteStopIds_loc_eta_walkTime.length = 0;
+        var activeStopLatLng = [];
+
+        var count = 0;
+        var count_max = 0;
+
+        console.log("getActiveRouteStops");
+        var dist = 0;
+        var minDist = 100000000;
+        // iterate over all active routes
+        for (let r of routes_set) {
+            console.log("route in set: " + r);
+
+            count_max = count_max + parseInt(routes[parseInt(r)].stops.length);
+
+            $.each(routes[parseInt(r)].stops, function (i, stop) {
+                // each STOP
+                // for each route, iterate over all stops
+                //console.log(stop);
+                //console.log("in each");
+                //console.log(stops[stop]);
+                console.log("eta response:");
+                $.getJSON("https://uc.doublemap.com/map/v2/eta?stop=" +
+                    + stop, function (output) {
+                    count++;
+                    //console.log("i: " + count);
+
+                    if (output.etas[stop].etas.length > 0) {
+                        //console.log("Ok");
+                        //console.log(output.etas[stop].etas);
+                        activeRouteStopIds_loc_eta_walkTime.push({
+                            routeId: r,
+                            stopId: stop,
+                            eta: output.etas[stop].etas[0].avg
+                        });
+
+                        activeStopLatLng.push({lat: stops[stop].lat, lng: stops[stop].lon});
+                    }
+
+                    // if all calls finished
+                    if (count == count_max) {
+                        // console.log("here..." + count);
+                        // console.log(activeRouteStopIds_loc_eta_walkTime);
+                        //console.log("length: " + activeStopLatLng.length);
+                        // console.log(activeStopLatLng);
+
+                        distMatrixService.getDistanceMatrix({
+                            origins: [loc],
+                            destinations: activeStopLatLng,
+                            travelMode: 'WALKING',
+                        }, callback_getClosestStopFromDistMatrixResp);
+                    }
+                });
+            });
+        }
+    };
+
+
+
+    var display_info = function (routeId, stopId, eta, walkTime) {
+        $('div#trackInfo').empty();
+
+        var routeName = routes[routeId].name;
+        var stopName = stops[stopId].name;
+
+        var timeMin = Math.trunc(parseInt(walkTime)/60.0);
+
+        if (typeof eta != 'undefined') {
+            $('div#trackInfo').append('<p id="arriveTime">Shuttle arrives in<span>'
+                + eta + ' min</span></p>');
+        } else {
+            $('div#trackInfo').append('<p id="arriveTime" class="noEta"><span>No ETA available</span></p>');
+        }
+
+        $('div#trackInfo').append('<p id="walkTime">Time to walk<span>'
+            + timeMin + ' min</span></p>');
+
+        $('div#trackInfo').append('<p id="stopName">Stop<span>'
+            + stopName + '</span></p>');
+
+        $('div#trackInfo').append('<p id="routeName">Route<span>'
+            + routeName + '</span></p>');
+
+
+    };
+
+    var callback_getClosestStopFromDistMatrixResp = function (response, status) {
+        console.log("status: " + status);
+        console.log(response);
+        // TODO change to MAX
+        var min_time = 1000000000;
+        var min_i = undefined;
+        $.each(response.rows[0].elements, function (i, el) {
+            activeRouteStopIds_loc_eta_walkTime[i].walkTime = el.duration.value;
+            console.log(el);
+            if (min_time > el.duration.value) {
+                min_time = el.duration.value;
+                min_i =  i;
+            }
+        });
+
+        console.log("====>");
+        console.log(activeRouteStopIds_loc_eta_walkTime);
+
+        //console.log("activeRouteStopIds: " + activeRouteStopIds[min_i].routeId);
+        if (typeof min_i !== 'undefined') {
+            console.log("min_time: " + min_time);
+            console.log(stops[activeRouteStopIds_loc_eta_walkTime[min_i].stopId]);
+            console.log(routes[activeRouteStopIds_loc_eta_walkTime[min_i].routeId]);
+
+            var pos = {
+                lat: stops[activeRouteStopIds_loc_eta_walkTime[min_i].stopId].lat,
+                lng: stops[activeRouteStopIds_loc_eta_walkTime[min_i].stopId].lon
+            };
+
+            plotRoute(loc, pos);
+            //    console.log($("select#route").val());
+            var child_opts = $("select#route").children().each(function () {
+                console.log($(this).val());
+            });
+
+            $("select#route").val('R' + activeRouteStopIds_loc_eta_walkTime[min_i].routeId).change();
+            $("select#stop").val('S' + activeRouteStopIds_loc_eta_walkTime[min_i].stopId).change();
+
+
+            display_info(
+                activeRouteStopIds_loc_eta_walkTime[min_i].routeId,
+                activeRouteStopIds_loc_eta_walkTime[min_i].stopId,
+                activeRouteStopIds_loc_eta_walkTime[min_i].eta,
+                activeRouteStopIds_loc_eta_walkTime[min_i].walkTime
+            );
+            // $('option:selected', 'select#route').removeAttr('selected');
+            //Using the value
+            // $('select#route').find('option[value="R45"]').attr("selected", true);
+        }
+    };
 
     var routeLine = [];
     $.getJSON("https://uc.doublemap.com/map/v2/routes", function (data) {
@@ -120,12 +339,12 @@ function initMap() {
                 }
             });
 
+
             //map.data.add(routeLine);
             //pathLayerGroup.add(r.polyline);
             //pathLayerGroup.remove(routeLine);
 
         }
-
 
         fetchStops();
 
@@ -166,8 +385,8 @@ function initMap() {
             // B; NEW
             // e: OLD
             var b, e;
-            console.log("buses.length");
-            console.log(dat.length);
+            //console.log("buses.length");
+            //console.log(dat.length);
             for (var i = 0, len = dat.length; i < len; i++) {
                 b = dat[i];
                 //console.log(b);
@@ -217,12 +436,12 @@ function initMap() {
                 }
             }
 
-            console.log("buses:");
-            console.log(buses);
+            //console.log("buses:");
+            //console.log(buses);
 
             //console.log(buses);
 
-            // iterate over all buses
+            // iterate over all buses, remove old buses ???
             for (var i = 0, len = busIds.length; i < len; i++) {
                 b = buses[busIds[i]];
                 if (!b)
@@ -235,9 +454,9 @@ function initMap() {
                 } else
                     b.live = undefined;
             }
-        });
 
-        setTimeout(fetchBuses, 3000);
+            setTimeout(fetchBuses, 3000);
+        });
     };
 
 
@@ -252,8 +471,9 @@ function initMap() {
             si = s.length;
             r.stopIcons = [];
 
-            while (si--) {
-                stop = stops[s[si]];
+            //while (si--) {
+            for (var i1 = 0; i1 < si; i1++) {
+                stop = stops[s[i1]];
                 if (stop === undefined)
                     continue;
 
@@ -263,8 +483,9 @@ function initMap() {
                         lng: stop.lon
                     },
                     properties: {
-                        routeId: r.id,
+                        stopId: stop.id,
                         title: stop.name,
+                        routeId: r.id,
                         icon: {
                             url: "stop_icon.png",
                             scaledSize: new google.maps.Size(12,12),
@@ -274,13 +495,33 @@ function initMap() {
                     }
                 });
 
-
-
                 r.stopIcons.push(mark);
             }
             //console.log("mark:");
             //console.log(mark);
         }
+    };
+
+    var fetchETA_updateBanner = function (stopId) {
+        $.getJSON('https://uc.doublemap.com/map/v2/eta?stop=' + stopId, function(data) {
+            var minTime = Number.MAX_SAFE_INTEGER;
+            if (data.etas[stopId]) {
+                var arr = data.etas[stopId].etas;
+
+                if (arr.length == 0) {
+                    $('div#trackInfo').html('<p>No ETA available.</p>');
+                } else {
+                    $.each(arr, function (i, e) {
+                        if (parseInt(e.avg) < minTime)
+                            minTime = parseInt(e.avg);
+                    });
+
+                    $('div#trackInfo').html('<p>ETA: .' + minTime + 'minutes</p>');
+                }
+            } else {
+                $('div#trackInfo').html('<p>No ETA available.</p>');
+            }
+        });
     };
 
     var moveBus = function(busId, lat, lon) {
@@ -443,12 +684,13 @@ function initMap() {
         });
 
         visibleBuses.length = 0;
-        visibleBuses = visibleBusesNew;
+        visibleBuses = visibleBusesNew.slice();
     };
 
     var removeAllBuses = function () {
         $.each(visibleBuses, function (i, bus_id) {
             buses[bus_id].icon.setMap(null);
+            buses[bus_id].visible = false;
         });
 
         visibleBuses.length = 0;
@@ -467,11 +709,8 @@ function initMap() {
         })
     };
 
-    $('select#route').change(function () {
-        removeRouteAndStops(currentRoute);
-        currentRoute = $(this).children('option:selected').val().substr(1);
-        addRouteStopsBuses(currentRoute);
-    });
+
+
 
     var addRoute = function(r_id) {
         //console.log(typeof r_id);
@@ -503,7 +742,7 @@ function initMap() {
 
         while (i--) {
             $('select#stop').append('<option value="S'
-                + s[i].getProperty("routeId") + '">'
+                + s[i].getProperty("stopId") + '">'
                 + s[i].getProperty("title") + '</option>');
         }
     };
@@ -551,6 +790,35 @@ function initMap() {
     };
 
 
+    var calc_eta_walkTime_stop_route = function (routeId, stopId) {
+
+        var eta;
+
+        console.log("route: " + routeId);
+        console.log("stop: " + stopId);
+
+        $.getJSON('https://uc.doublemap.com/map/v2/eta?stop=' + stopId, function(data) {
+
+            console.log(data);
+            if (data.etas[stopId].etas.length > 0) {
+                eta = data.etas[stopId].etas[0].avg;
+            } else {
+                eta = undefined;
+            }
+
+            distMatrixService.getDistanceMatrix({
+                origins: [loc],
+                destinations: [{lat: stops[stopId].lat, lng: stops[stopId].lon}],
+                travelMode: 'WALKING'
+            }, function (resp, status) {
+                console.log("status_matrixservice 2: " + status);
+                console.log(resp);
+
+                display_info(routeId, stopId, eta, resp.rows[0].elements[0].duration.value);
+            });
+        });
+    };
+
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
@@ -571,10 +839,41 @@ function initMap() {
     });
 
 
+    $('select#route').change(function () {
+        removeRouteAndStops(currentRoute);
+        currentRoute = $(this).children('option:selected').val().substr(1);
+        addRouteStopsBuses(currentRoute);
+
+        $('select#stop').change();
+    });
+
+    $('select#stop').change(function () {
+        console.log("STOP CHANGED..");
+        currentStopId = $(this).children('option:selected').val().substr(1);
+
+
+        calc_eta_walkTime_stop_route(
+            $('select#route').children('option:selected').val().substr(1),
+            currentStopId
+        );
+    });
+    
+    $('a#calcDist').click(function () {
+        populateActiveRoutesFromBuses();
+        getActiveRoutesClosestStop(activeRoutes);
+    });
 }
 
 $(function(){
     console.log("announcement...");
+
+    $(window).resize(function(){
+        $('.drop_down_filter').select2();
+        //$("span").text(x += 1);
+    });
+
+    $('.drop_down_filter').select2();
+
     // jQuery methods go here...
     $.getJSON('https://uc.doublemap.com/map/v2/announcements', function(dat) {
         $.each(dat, function (index, val) {

@@ -5,24 +5,28 @@
     <title>shuttle tracker</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="reset.css">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600,600i" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <!--<link rel="shortcut icon" href="">-->
 </head>
 <body>
 <div id="left-pane">
+    <a href="#" id="calcDist">Calc Distance</a>
     <input type="text" id="map_search">
-    <select id="route" name=routes">
-    </select>
-    <select id="stop" name="Stops">
-
-    </select>
+    <div id="selectBoxes">
+        <select id="route" name=routes" class="drop_down_filter">
+        </select>
+        <select id="stop" name="Stops" class="drop_down_filter">
+        </select>
+    </div>
     <div id="info">
     </div>
 </div>
 
-<div id="trackInfo">sdfdsf<br>sdfsf23424
-
-    3424234234
+<div id="trackInfo">
 </div>
 <div id="map">
 
