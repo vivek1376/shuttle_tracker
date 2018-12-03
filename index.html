@@ -16,8 +16,14 @@
 <div class="wrapper">
     <div id="left-pane" class="menu">
         <div id="wrap">
-            <a href="#" id="calcDist">Calc Distance</a>
-            <input type="text" id="map_search" placeholder="Search Box" class="controls">
+            <div class="btns">
+                <input id="btLoc" type="button" value="FETCH LOCATION">
+                <input id="btClst" type="button" value="FIND CLOSEST STOP">
+            </div>
+            <!--<a href="#" id="calcDist">Calc Distance</a>-->
+            <p id="lblLoc" class="banner">Search by location</p>
+            <input type="text" id="map_search" placeholder="" class="controls">
+            <p id="lblDropDwn">Select route & stop</p>
             <div id="selectBoxes">
                 <select id="route" name=routes" class="drop_down_filter">
                 </select>

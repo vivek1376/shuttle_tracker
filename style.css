@@ -93,8 +93,19 @@ div#info p {
 }
 
 div#info p.banner {
-    border-bottom: 1px solid #c6c3b7;
+/*p.banner {*/
+    border-bottom: 1px solid #e5e7dd;
     background-color: transparent;
+    color: #aba89e;
+    text-transform: uppercase;
+    text-align: right;
+    font-weight: bold;
+    font-style: italic;
+    letter-spacing: 0.3em;
+}
+
+p#lblLoc, p#lblDropDwn {
+    padding-bottom: 0.4em;
     color: #aba89e;
     text-transform: uppercase;
     text-align: right;
@@ -105,20 +116,12 @@ div#info p.banner {
 
 body {
     background-color: whitesmoke;
-    background-image: url("kindajean.v3.png");
+    background-image: url("kindajean.v2.png");
     font-family: 'IBM Plex Sans';
 }
 
 div#trackInfo{
     padding: 1.2em;
-}
-
-select {
-   /*-webkit-appearance: none;*/
-   /*-moz-appearance: none;*/
-   /*appearance: none;       !* remove default arrow *!*/
-   /*background-image: url(...);   !* add custom arrow *!*/
-
 }
 
 div#selectBoxes {
@@ -227,4 +230,38 @@ div.wrapper div.content {
     margin-top: 1em;
     margin-right: 1em;
     margin-bottom: 1em;
+}
+
+input[type=button] {
+    background-color: #7eaab7;
+    border: none;
+    color: #f5ece6;
+    padding: 0.3em 1em;
+    text-decoration: none;
+    /*margin: 4px 2px;*/
+    cursor: pointer;
+    margin-bottom: 1em;
+    border-bottom: 1px solid #62858f;
+    border-top: 1px solid #9dd3e4;
+    border-left: 1px solid #84b1bf;
+    border-right: 1px solid #84b1bf;
+    border-radius: 1px;
+    font-family: "IBM Plex Sans Condensed";
+    letter-spacing: 0.05em;
+    /*font-style: italic;*/
+    font-weight: bold;
+    display: block;
+    /*width: 15em;*/
+    margin-bottom: 0.3em;
+    display: inline-block;
+}
+
+input[type=button]#btClst {
+    /*display: inline-block;*/
+    float: right;
+    /*position: absolute;*/
+}
+
+div#wrap div.btns {
+    margin-bottom: 4em;
 }

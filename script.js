@@ -15,6 +15,8 @@ function initMap() {
 
     var refreshBuses = true;
 
+    var triggerSource = 0;
+
     var jumpThreshold = 300;
     var currentRoute = undefined;
 
@@ -24,9 +26,17 @@ function initMap() {
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer({
         preserveViewport: true,
-        suppressMarkers: true
+        markerOptions: {
+            icon: {
+                // url: "noun_MapMarker_7587.svg",
+                url: "marker.svg",
+                scaledSize: new google.maps.Size(36,45)
+                // anchor: new google.maps.Point(17,19)
+            }
+        }
+        // suppressMarkers: true
     });
-    var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+    // var chicago = new google.maps.LatLng(41.850033, -87.6500523);
     // var mapOptions = {
     // zoom:7,
     //  center: chicago
@@ -37,16 +47,187 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: loc,
         zoom: 14,
-        mapTypeId: 'roadmap'
+        mapTypeId: 'roadmap',
+        styles: [
+            {
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#f5f5f5"
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#616161"
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "color": "#f5f5f5"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.land_parcel",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#bdbdbd"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#eeeeee"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#757575"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#e5e5e5"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9e9e9e"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#ffffff"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.arterial",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#757575"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#dadada"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#616161"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.local",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9e9e9e"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit.line",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#e5e5e5"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit.station",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#eeeeee"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#c9c9c9"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9e9e9e"
+                    }
+                ]
+            }
+        ],
+        mapTypeControl: false,
+        streetViewControl: false
         //disableDefaultUI: true,
         //gestureHandling: 'cooperative'
     });
 
     // PLACE SEARCH
-    var input = document.getElementById('map_search');
-    var searchBox = new google.maps.places.SearchBox(input);
-    console.log("searchbox:" + searchBox);
 
+    var defaultBounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(39.038558, -84.654973),
+        new google.maps.LatLng(39.218471, -84.373636));
+
+    console.log(defaultBounds);
+
+    var input = document.getElementById('map_search');
+
+    var searchBox = new google.maps.places.SearchBox(input, {
+        bounds: defaultBounds
+    });
+    // console.log("searchbox:" + searchBox);
 
     searchBox.addListener('places_changed', function() {
         var places = searchBox.getPlaces();
@@ -57,7 +238,10 @@ function initMap() {
         }
 
         places.forEach(function(place) {
-            console.log(place.geometry.location.toJSON());
+            loc = place.geometry.location.toJSON();
+            console.log(loc);
+            var stopId = $('select#stop').children('option:selected').val().substr(1);
+            plotRoute(loc, {lat: stops[stopId].lat, lng: stops[stopId].lon});
         });
     });
 
@@ -97,54 +281,56 @@ function initMap() {
     //map.setTilt(45);
     infoWindow = new google.maps.InfoWindow;
 
-    var marker = new google.maps.Marker({position: loc, map: map});
+    // var marker = new google.maps.Marker({position: loc, map: map});
 
     //auto fetch location
-    if (navigator.geolocation) {
-        console.log("navigator");
-        navigator.geolocation.getCurrentPosition(function (position) {
-
-            pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            console.log("inside");
-            console.log(pos);
-
-            // var request = {
-            //     origin: loc,
-            //     destination: pos,
-            //     travelMode: 'WALKING'
-            // };
-            //
-            // directionsService.route(request, function(result, status) {
-            //     if (status == 'OK') {
-            //         //console.log(result.routes[0].legs[0]);
-            //        directionsDisplay.setDirections(result);
-            //     }
-            // });
-
-
-            //infoWindow.setPosition(pos);
-            //infoWindow.setContent('Location found.');
-            //infoWindow.open(map);
-
-            //marker.setPosition(pos);
-
-            marker.setPosition(pos);
-
-            // infoWindow.setPosition(pos);
-            // infoWindow.setContent('Location found.');
-            //infoWindow.open(map);
-
-            //map.setCenter(pos);
-        }, function () {
-            handleLocationError(true, infoWindow, map.getCenter());
-        });
-    } else {
-        handleLocationError(false, infoWindow, map.getCenter());
-    }
+    // if (navigator.geolocation) {
+    //     console.log("navigator");
+    //     navigator.geolocation.getCurrentPosition(function (position) {
+    //
+    //         pos = {
+    //             lat: position.coords.latitude,
+    //             lng: position.coords.longitude
+    //         };
+    //         console.log("inside");
+    //         console.log(pos);
+    //
+    //         // var request = {
+    //         //     origin: loc,
+    //         //     destination: pos,
+    //         //     travelMode: 'WALKING'
+    //         // };
+    //         //
+    //         // directionsService.route(request, function(result, status) {
+    //         //     if (status == 'OK') {
+    //         //         //console.log(result.routes[0].legs[0]);
+    //         //        directionsDisplay.setDirections(result);
+    //         //     }
+    //         // });
+    //
+    //
+    //         //infoWindow.setPosition(pos);
+    //         //infoWindow.setContent('Location found.');
+    //         //infoWindow.open(map);
+    //
+    //         //marker.setPosition(pos);
+    //
+    //         marker.setPosition(pos);
+    //
+    //         // infoWindow.setPosition(pos);
+    //         // infoWindow.setContent('Location found.');
+    //         //infoWindow.open(map);
+    //
+    //         //map.setCenter(pos);
+    //     }, function () {
+    //         handleLocationError(true, infoWindow, map.getCenter());
+    //     });
+    // } else {
+    //     handleLocationError(false, infoWindow, map.getCenter());
+    // }
     var plotRoute = function (pos1, pos2) {
+        console.log("IN plotroute....");
+
         var request = {
             origin: pos1,
             destination: pos2,
@@ -240,10 +426,17 @@ function initMap() {
 
                     // if all calls finished
                     if (count == count_max) {
-                        // console.log("here..." + count);
+                        console.log("here..." + count);
+                        // TODO remove hack
+                        if (activeStopLatLng.length > 25) {
+                            activeStopLatLng.length = 25;
+                            activeRouteStopIds_loc_eta_walkTime.length = 25;
+                        }
                         // console.log(activeRouteStopIds_loc_eta_walkTime);
                         //console.log("length: " + activeStopLatLng.length);
                         // console.log(activeStopLatLng);
+                        console.log(loc);
+                        console.log(activeStopLatLng);
 
                         distMatrixService.getDistanceMatrix({
                             origins: [loc],
@@ -320,12 +513,16 @@ function initMap() {
             };
 
             plotRoute(loc, pos);
+
+
             //    console.log($("select#route").val());
-            var child_opts = $("select#route").children().each(function () {
-                console.log($(this).val());
-            });
+            // var child_opts = $("select#route").children().each(function () {
+            //     console.log($(this).val());
+            // });
 
             $("select#route").val('R' + activeRouteStopIds_loc_eta_walkTime[min_i].routeId).change();
+
+
             $("select#stop").val('S' + activeRouteStopIds_loc_eta_walkTime[min_i].stopId).change();
 
 
@@ -610,8 +807,8 @@ function initMap() {
                 url: "MTS_Bus_icon.svg",
                 //path: google.maps.SymbolPath.CIRCLE,
                 //scale: 7
-                scaledSize: new google.maps.Size(26,26),
-                anchor: new google.maps.Point(13,13)
+                scaledSize: new google.maps.Size(30,30),
+                anchor: new google.maps.Point(15,15)
              },
             clickable: false,
             optimized: false,
@@ -731,10 +928,11 @@ function initMap() {
     };
 
     var addBusesForRoute = function(route) {
-        console.log("currentRoute: "  + currentRoute);
+        console.log("ADD BUSES FOR ROUTE: "  + currentRoute);
         $.each(buses, function (i, bus) {
             //console.log(bus);
 
+            console.log(bus);
             if (bus.route == currentRoute) {
                 visibleBuses.push(i);
                 bus.icon.setMap(map);
@@ -795,15 +993,15 @@ function initMap() {
         }
     };
 
-    var marker2 = new google.maps.Marker({
-        position: map.getCenter(),
-        icon: {
-            path: google.maps.SymbolPath.CIRCLE,
-            scale: 8
-        },
-        draggable: true,
-        map: map
-    });
+    // var marker2 = new google.maps.Marker({
+    //     position: map.getCenter(),
+    //     icon: {
+    //         path: google.maps.SymbolPath.CIRCLE,
+    //         scale: 8
+    //     },
+    //     draggable: true,
+    //     map: map
+    // });
 
 
     var highlightRoute = function(routeId, state) {
@@ -851,6 +1049,8 @@ function initMap() {
                 display_info(routeId, stopId, eta, resp.rows[0].elements[0].duration.value);
             });
         });
+
+        plotRoute(loc, {lat: stops[stopId].lat, lng: stops[stopId].lon});
     };
 
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -873,28 +1073,57 @@ function initMap() {
     });
 
 
-    $('select#route').change(function () {
+    $('select#route').change({flag: triggerSource}, function (event) {
         removeRouteAndStops(currentRoute);
         currentRoute = $(this).children('option:selected').val().substr(1);
         addRouteStopsBuses(currentRoute);
+        // here new Stop list has been added to select#stop
 
-        $('select#stop').change();
+        // TODO hack ????
+
+        console.log("Route changed.. stop:");
+        console.log(event);
+        // var stopId = $('select#stop').children('option:selected').val().substr(1);
+        // console.log(stops[stopId]);
+
+
+        //?????????
+        //$('select#stop').change();
     });
 
     $('select#stop').change(function () {
         console.log("STOP CHANGED..");
-        currentStopId = $(this).children('option:selected').val().substr(1);
+
+        var stopId = $(this).children('option:selected').val().substr(1);
 
 
         calc_eta_walkTime_stop_route(
             $('select#route').children('option:selected').val().substr(1),
-            currentStopId
+            stopId
         );
     });
     
-    $('a#calcDist').click(function () {
+    $('input[type=button]#btClst').click(function () {
         populateActiveRoutesFromBuses();
         getActiveRoutesClosestStop(activeRoutes);
+    });
+
+    $('input#btLoc').click(function () {
+        console.log("button clicked");
+        if (navigator.geolocation) {
+            console.log("yes");
+            navigator.geolocation.getCurrentPosition(function (position) {
+                loc = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                console.log(loc);
+
+                var stopId = $('select#stop').children('option:selected').val().substr(1);
+                plotRoute(loc, {lat: stops[stopId].lat, lng: stops[stopId].lon});
+            });
+        }
     });
 }
 
