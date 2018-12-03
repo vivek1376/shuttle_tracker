@@ -1,3 +1,7 @@
+html {
+    height: 100%;
+}
+
 input#map_search{
     display: block;
     width: 100%;
@@ -19,6 +23,7 @@ select#stop {
 div#info {
     width: 100%;
     height:600px;
+    /*bottom: 0;*/
     /*border: #603d3d;*/
     /*border-style: solid;*/
     /*border-width: 1px;*/
@@ -31,10 +36,14 @@ div#left-pane {
     border: 1px solid #d5ced1;
     float: left;
     margin: 1em;
-    padding: 1em;
-    /*height: 100%;*/
+    /*padding: 1em;*/
+    height: 100%;
     background-color: #fdfdfb;
     border-radius: 0.3em;
+}
+
+div#left-pane div#wrap {
+    padding: 1em;
 }
 
 div#trackInfo {
@@ -50,6 +59,8 @@ div#trackInfo {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
+
+
 
 div#map {
     width: 56%;
@@ -68,9 +79,10 @@ div#map {
 }
 
 div#info p {
-    background-color: #c4efee;
-    margin: 0.5em;
-    padding: 0.3em;
+    background-color: #fcfce8;
+    padding: 0.6em;
+    /*margin: 0.5em;*/
+    border-bottom: 1px solid #c6c3b7;
 }
 
 body {
@@ -102,17 +114,19 @@ div#trackInfo p {
 p#arriveTime {
     font-size: 2.1em;
     text-align: left;
+    /*font-style: italic;*/
+    font-weight: normal;
 
 }
 
 p#arriveTime span {
-    padding-left: 0.6em;
-    padding-right: 0.6em;
-    margin-left: 0.2em;
-    border-radius: 0.8em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    margin-left: 0.32em;
+    border-radius: 0.28em;
     background-color: #a1fbde;
     color: #032225;
-    font-style: italic;
+    font-style: normal;
     font-weight: bold;
 }
 
@@ -120,17 +134,19 @@ p#walkTime {
     margin-top: 0.5em;
     font-size: 1.8em;
     text-align: left;
+    /*font-style: italic;*/
+    font-weight: normal;
 }
 
 p#walkTime span {
     background-color: #192543;
     color: #e3dbde;
     font-weight: bold;
-    font-style: italic;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    margin-left: 0.1em;
-    border-radius: 0.7em;
+    font-style: normal;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    margin-left: 0.3em;
+    border-radius: 0.25em;
     background-color: #a1fbde;
     color: #032225;
 }
@@ -158,12 +174,25 @@ p#routeName span {
     font-weight: bold;
 }
 
-/*div#trackInfo p.noEta span {*/
-    /*background-color: transparent;*/
-    /*color: #eb5176;*/
-    /*padding: 0;*/
-    /*margin-left: 0;*/
-    /*border-radius: 0.8em;*/
+div#trackInfo p.noEta span {
+    background-color: transparent;
+    color: #fd5888;
+    padding: 0;
+    margin-left: 0;
     /*font-style: italic;*/
-    /*font-weight: normal;*/
-/*}*/
+    font-weight: bold;
+}
+
+input#map_search {
+    border-radius: 0;
+    border: 3px solid #b2a5a8;
+    height: 3em;
+    padding: 0.5em;
+    font-family: "IBM Plex Sans Condensed";
+    font-size: 1rem;
+
+}
+
+input#map_search:hover, input#map_search:focus {
+    border-color: #9a8f91;
+}

@@ -42,6 +42,29 @@ function initMap() {
         //gestureHandling: 'cooperative'
     });
 
+    // PLACE SEARCH
+    var input = document.getElementById('map_search');
+    var searchBox = new google.maps.places.SearchBox(input);
+    console.log("searchbox:" + searchBox);
+
+
+    searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+            console.log("no result in places search");
+            return;
+        }
+
+        places.forEach(function(place) {
+            console.log(place.geometry.location.toJSON());
+        });
+    });
+
+
+    // PLACE SEARCH END
+
+
     directionsDisplay.setMap(map);
 
     var distMatrixService = new google.maps.DistanceMatrixService();
@@ -137,6 +160,9 @@ function initMap() {
     };
 
     var populateActiveRoutesFromBuses = function () {
+        // console.log("buses:");
+        // console.log(buses);
+
         activeRoutes.clear();
         $.each(buses, function (i, bus) {
             activeRoutes.add(bus.route);
@@ -167,13 +193,19 @@ function initMap() {
     };
 
     var getActiveRoutesClosestStop = function (routes_set) {
+
+        if (routes_set.size == 0) {
+            display_info(undefined, undefined, undefined, undefined, true);
+            return;
+        }
+
         activeRouteStopIds_loc_eta_walkTime.length = 0;
         var activeStopLatLng = [];
 
         var count = 0;
         var count_max = 0;
 
-        console.log("getActiveRouteStops");
+        console.log("getActiveRouteStops" + routes_set);
         var dist = 0;
         var minDist = 100000000;
         // iterate over all active routes
@@ -190,7 +222,7 @@ function initMap() {
                 //console.log(stops[stop]);
                 console.log("eta response:");
                 $.getJSON("https://uc.doublemap.com/map/v2/eta?stop=" +
-                    + stop, function (output) {
+                    +stop, function (output) {
                     count++;
                     //console.log("i: " + count);
 
@@ -226,8 +258,13 @@ function initMap() {
 
 
 
-    var display_info = function (routeId, stopId, eta, walkTime) {
+    var display_info = function (routeId, stopId, eta, walkTime, noActiveRoutes = false) {
         $('div#trackInfo').empty();
+
+        if (noActiveRoutes === true) {
+            $('div#trackInfo').append('<p id="arriveTime" class="noEta"><span>No Routes active</span></p>');
+            return;
+        }
 
         var routeName = routes[routeId].name;
         var stopName = stops[stopId].name;
@@ -292,15 +329,12 @@ function initMap() {
             $("select#stop").val('S' + activeRouteStopIds_loc_eta_walkTime[min_i].stopId).change();
 
 
-            display_info(
-                activeRouteStopIds_loc_eta_walkTime[min_i].routeId,
-                activeRouteStopIds_loc_eta_walkTime[min_i].stopId,
-                activeRouteStopIds_loc_eta_walkTime[min_i].eta,
-                activeRouteStopIds_loc_eta_walkTime[min_i].walkTime
-            );
+            display_info(activeRouteStopIds_loc_eta_walkTime[min_i].routeId, activeRouteStopIds_loc_eta_walkTime[min_i].stopId, activeRouteStopIds_loc_eta_walkTime[min_i].eta, activeRouteStopIds_loc_eta_walkTime[min_i].walkTime);
             // $('option:selected', 'select#route').removeAttr('selected');
             //Using the value
             // $('select#route').find('option[value="R45"]').attr("selected", true);
+        } else {
+            console.log("No valid etas...");
         }
     };
 
