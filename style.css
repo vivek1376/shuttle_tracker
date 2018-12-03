@@ -21,8 +21,10 @@ select#stop {
     margin-bottom: 8em;
 }
 div#info {
+    position: absolute;
     width: 100%;
-    height:600px;
+    bottom: 0;
+    /*height:600px;*/
     /*bottom: 0;*/
     /*border: #603d3d;*/
     /*border-style: solid;*/
@@ -32,14 +34,18 @@ div#info {
 
 
 div#left-pane {
-    width: 24%;
+    width: 26em;
+    max-width: 40%;
     border: 1px solid #d5ced1;
-    float: left;
+    /*float: left;*/
     margin: 1em;
     /*padding: 1em;*/
-    height: 100%;
+    /*height: 100%;*/
     background-color: #fdfdfb;
     border-radius: 0.3em;
+    position: absolute;
+    bottom: 0;
+    top: 0;
 }
 
 div#left-pane div#wrap {
@@ -47,12 +53,12 @@ div#left-pane div#wrap {
 }
 
 div#trackInfo {
-    width: 56%;
-    height: 250px;
+    /*width: 56%;*/
+    height: 30%;
     border: 1px solid #d5ced1;
     border-bottom: 0;
-    float: left;
-    margin: 1em;
+    /*float: left;*/
+    /*margin: 1em;*/
     margin-bottom: 0;
     background-color: #fdfdfb;
     border-radius: 0.3em;
@@ -63,11 +69,11 @@ div#trackInfo {
 
 
 div#map {
-    width: 56%;
-    height: 600px;
+    /*width: 56%;*/
+    height: 70%;
     border: 0; /*1px solid #3d0e10;*/
-    float: left;
-    margin: 1em;
+    /*float: left;*/
+    /*margin: 1em;*/
     margin-top: 0;
     border: 1px solid #d5ced1;
     border-top: 0;
@@ -83,11 +89,23 @@ div#info p {
     padding: 0.6em;
     /*margin: 0.5em;*/
     border-bottom: 1px solid #c6c3b7;
+    border-collapse: collapse;
+}
+
+div#info p.banner {
+    border-bottom: 1px solid #c6c3b7;
+    background-color: transparent;
+    color: #aba89e;
+    text-transform: uppercase;
+    text-align: right;
+    font-weight: bold;
+    font-style: italic;
+    letter-spacing: 0.3em;
 }
 
 body {
     background-color: whitesmoke;
-    background-image: url("kindajean.png");
+    background-image: url("kindajean.v3.png");
     font-family: 'IBM Plex Sans';
 }
 
@@ -195,4 +213,18 @@ input#map_search {
 
 input#map_search:hover, input#map_search:focus {
     border-color: #9a8f91;
+}
+
+
+div.wrapper div.content {
+    position: absolute;
+    /*border: 2px solid black;*/
+    width: 50em;
+    /*height: 100%;*/
+    bottom: 0;
+    top: 0;
+    margin-left: 28em;
+    margin-top: 1em;
+    margin-right: 1em;
+    margin-bottom: 1em;
 }
