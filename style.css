@@ -132,15 +132,16 @@ div#selectBoxes {
 div#trackInfo p {
     color: #5f5858;
 }
-p#arriveTime {
+p#arriveTime , p#walkTime{
     font-size: 2.1em;
-    text-align: left;
+    /*text-align: left;*/
     /*font-style: italic;*/
     font-weight: normal;
 
 }
 
-p#arriveTime span {
+
+p#arriveTime span, p#walkTime span {
     padding-left: 0.5em;
     padding-right: 0.5em;
     margin-left: 0.32em;
@@ -151,36 +152,44 @@ p#arriveTime span {
     font-weight: bold;
 }
 
-p#walkTime {
-    margin-top: 0.5em;
-    font-size: 1.8em;
-    text-align: left;
-    /*font-style: italic;*/
-    font-weight: normal;
+div#trackInfo div#eta {
+    margin-top: 1.5em;
 }
 
-p#walkTime span {
-    background-color: #192543;
-    color: #e3dbde;
-    font-weight: bold;
-    font-style: normal;
-    padding-left: 0.4em;
-    padding-right: 0.4em;
-    margin-left: 0.3em;
-    border-radius: 0.25em;
-    background-color: #a1fbde;
-    color: #032225;
+div#trackInfo div#eta p {
+text-align: right;
+    margin-bottom: 0.2em;
 }
+/*p#walkTime {*/
+    /*margin-top: 0.5em;*/
+    /*font-size: 1.8em;*/
+    /*text-align: left;*/
+    /*!*font-style: italic;*!*/
+    /*font-weight: normal;*/
+/*}*/
+
+/*p#walkTime span {*/
+    /*background-color: #192543;*/
+    /*color: #e3dbde;*/
+    /*font-weight: bold;*/
+    /*font-style: normal;*/
+    /*padding-left: 0.4em;*/
+    /*padding-right: 0.4em;*/
+    /*margin-left: 0.3em;*/
+    /*border-radius: 0.25em;*/
+    /*background-color: #a1fbde;*/
+    /*color: #032225;*/
+/*}*/
 
 p#routeName {
     font-size: 1.2em;
-    text-align: right;
+    text-align: left;
 }
 
 p#stopName {
-    margin-top: 2em;
+    /*margin-top: 2em;*/
     font-size: 1.2em;
-    text-align: right;
+    text-align: left;
 }
 
 p#stopName span {

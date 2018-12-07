@@ -452,10 +452,11 @@ function initMap() {
 
 
     var display_info = function (routeId, stopId, eta, walkTime, noActiveRoutes = false) {
-        $('div#trackInfo').empty();
+        $('div#trackInfo div#stRt').empty();
+        $('div#trackInfo div#eta').empty();
 
         if (noActiveRoutes === true) {
-            $('div#trackInfo').append('<p id="arriveTime" class="noEta"><span>No Routes active</span></p>');
+            $('div#trackInfo div#eta').append('<p id="arriveTime" class="noEta"><span>No Routes active</span></p>');
             return;
         }
 
@@ -464,22 +465,21 @@ function initMap() {
 
         var timeMin = Math.trunc(parseInt(walkTime)/60.0);
 
-        if (typeof eta != 'undefined') {
-            $('div#trackInfo').append('<p id="arriveTime">Shuttle arrives in<span>'
-                + eta + ' min</span></p>');
-        } else {
-            $('div#trackInfo').append('<p id="arriveTime" class="noEta"><span>No ETA available</span></p>');
-        }
-
-        $('div#trackInfo').append('<p id="walkTime">Time to walk<span>'
-            + timeMin + ' min</span></p>');
-
-        $('div#trackInfo').append('<p id="stopName">Stop<span>'
+        $('div#trackInfo div#stRt').append('<p id="stopName">Stop<span>'
             + stopName + '</span></p>');
 
-        $('div#trackInfo').append('<p id="routeName">Route<span>'
+        $('div#trackInfo div#stRt').append('<p id="routeName">Route<span>'
             + routeName + '</span></p>');
 
+        if (typeof eta != 'undefined') {
+            $('div#trackInfo div#eta').append('<p id="arriveTime">Shuttle arrives in<span>'
+                + eta + ' min</span></p>');
+        } else {
+            $('div#trackInfo div#eta').append('<p id="arriveTime" class="noEta"><span>No ETA available</span></p>');
+        }
+
+        $('div#trackInfo div#eta').append('<p id="walkTime">Time to walk<span>'
+            + timeMin + ' min</span></p>');
 
     };
 
@@ -932,7 +932,7 @@ function initMap() {
         $.each(buses, function (i, bus) {
             //console.log(bus);
 
-            console.log(bus);
+            // console.log(bus);
             if (bus.route == currentRoute) {
                 visibleBuses.push(i);
                 bus.icon.setMap(map);
